@@ -572,3 +572,41 @@ tbody tr:hover {
       color 0.15s;
   }
 }
+
+.site-nav { display:flex; gap:22px; font-size:12px; font-weight:600; }
+.site-nav a { text-decoration:none; }
+.daily-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; align-items:start; }
+.day-column { min-width:0; border:1px solid var(--line); border-radius:12px; padding:18px; background:#eef1eb; }
+.day-column.today { background:#e6eee3; border-color:#91aa87; }
+.day-heading { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #d3ddcf; padding-bottom:14px; }
+.day-heading h3 { margin:0; font-size:20px; letter-spacing:-.5px; }
+.day-heading time { font-size:11px; color:var(--muted); }
+.day-league h4 { font-size:11px; margin:18px 0 10px; }
+.day-league h4 a { text-decoration:none; }
+.day-league .match { margin-bottom:12px; }
+.day-league .match-meta { padding:12px; flex-wrap:wrap; }
+.day-league .teams { padding:14px 12px; }
+.day-league .teams > div { gap:8px; font-size:13px; }
+.day-league .details-button { padding:11px 12px; }
+.day-empty { font-size:12px; color:var(--muted); margin:10px 0 18px; }
+.summary-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.summary-card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:24px; min-width:0; }
+.card-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:20px; }
+.card-heading a,.card-heading > span { font-size:11px; color:var(--muted); }
+.standings-preview h3 { font-size:12px; margin:18px 0 10px; }
+.standings-preview table { min-width:360px; }
+.standings-preview td,.standings-preview th { padding:12px 10px; }
+.scorer-list { list-style:none; padding:0; margin:0; }
+.scorer-list li { display:flex; justify-content:space-between; gap:18px; padding:15px 0; border-bottom:1px solid var(--line); }
+.scorer-name { font-size:13px; }
+.scorer-list small { display:block; font-size:10px; color:var(--muted); font-weight:400; }
+.scorer-list strong { font-size:23px; text-align:right; min-width:35px; line-height:1.2; }
+.group-nav { max-width:1136px; margin:24px auto 0; display:flex; gap:20px; padding:0 24px; font-size:13px; }
+.embedded-dashboard { padding-top:30px; }
+#group-a,#group-b { scroll-margin-top:20px; }
+@media(max-width:1000px) { .daily-grid { gap:12px; } .day-column { padding:12px; } .day-heading { align-items:start; gap:4px; flex-direction:column; } .home-main h1 { font-size:46px; } }
+@media(max-width:760px) { .daily-grid,.summary-grid { grid-template-columns:1fr; } .day-heading { flex-direction:row; } .site-header { flex-wrap:wrap; height:auto; padding-top:16px; padding-bottom:16px; gap:16px; } .site-nav { order:3; width:100%; gap:24px; } .summary-card { padding:18px; } .home-main h1 { font-size:38px; } }
+.league-title { font-size:58px; line-height:1.1; letter-spacing:-2.7px; margin:0 0 14px; }
+.league-title span { color:#8d9d6e; }
+main.druga-main { max-width:none; padding:0; }
+@media(max-width:760px) { .league-title { font-size:38px; } }

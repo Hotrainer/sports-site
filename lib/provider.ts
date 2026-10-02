@@ -1,3 +1,5 @@
+import { parseScorers } from "./scorers";
+export type LeagueKey = "1" | "2a" | "2b";
 import { cache } from "react";
 import { calendarSchema, standingsSchema, type LeagueData } from "./schema";
 import { parseGoals, goalsMatchScore } from "./goals";
@@ -11,16 +13,16 @@ async function get(path: string) {
   return response;
 }
 // Deduplicate shared feed reads within a render without caching between requests.
-const getCalendar = cache(async () => calendarSchema.parse(await (await get("/calendar-json/1")).json()));
-const getStandings = cache(async () => standingsSchema.parse(await (await get("/standing-json-tv/1")).json()));
+const getCalendar = cache(async (league: LeagueKey = "1") => calendarSchema.parse(await (await get(`/calendar-json/${league}`)).json()));
+const getStandings = cache(async (league: LeagueKey = "1") => standingsSchema.parse(await (await get(`/standing-json-tv/${league}`)).json()));
 // Replace this adapter to move to a different provider; the UI uses normalized types only.
 export const footballProvider = {
   getCalendar,
   getStandings,
-  async getLeague(): Promise<LeagueData> {
+  async getLeague(league: LeagueKey = "1"): Promise<LeagueData> {
     const [calendar, standings] = await Promise.allSettled([
-      getCalendar(),
-      getStandings(),
+      getCalendar(league),
+      getStandings(league),
     ]);
     return {
       calendar: calendar.status === "fulfilled" ? calendar.value : null,
@@ -36,9 +38,9 @@ export const footballProvider = {
       ],
     };
   },
-  async getGoals(id: number) {
+  async getGoals(id: number, league: LeagueKey = "1") {
     const calendar = calendarSchema.parse(
-      await (await get("/calendar-json/1")).json(),
+      await (await get(`/calendar-json/${league}`)).json(),
     );
     const match = calendar.tours
       .flatMap((t) => t.matches)
@@ -59,3 +61,11 @@ export const footballProvider = {
     };
   },
 };
+
+export const getLeague = cache((league: LeagueKey) => footballProvider.getLeague(league));
+export const getScorers = cache(async (league: LeagueKey) => {
+ const data = await getLeague(league);
+ if (!data.calendar) return { players: [], unavailable: true };
+ try { return { players: parseScorers(await (await get(`/standing/${data.calendar.tournamentId}`)).text(), league), unavailable: false }; }
+ catch { return { players: [], unavailable: true }; }
+});

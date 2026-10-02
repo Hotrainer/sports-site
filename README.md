@@ -59,3 +59,9 @@ vercel --prod
 
 Deployment was attempted on 30 September 2026. The saved Vercel OAuth session could not refresh; the CLI also could not persist its auth configuration within the session sandbox. No deployment or public URL was produced. Reauthenticate before retrying. No paid plan was purchased.
 # sports-site
+
+## Homepage and league pages — 2 October 2026
+
+Homepage now shows yesterday/today/tomorrow matches using Kyiv dates, top-five standings for Persha Liga and both Druga groups, and top-five scorer lists. Full dashboards are at `/persha-liga` and `/druga-liga`. Druga groups have independent filters and standings. Current league keys: `1`, `2a`, `2b`.
+
+Scorer totals are parsed from `.row-bombardiers` on official `/standing/{tournamentId}` pages. Druga totals combine both groups, failing closed if either group is unavailable. Tied totals sort by Ukrainian player name. HTML markup changes may make scorers unavailable. Existing Hotrainer branding, uncached server reads and automatic five-minute refresh are preserved.

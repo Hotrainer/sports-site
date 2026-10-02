@@ -1,0 +1,8 @@
+import type { Standing } from "@/lib/schema";
+import type { Scorer } from "@/lib/scorers";
+export function StandingPreview({ rows, title }: { rows: Standing[]; title: string }) {
+ return <div className="standings-preview"><h3>{title}</h3>{rows.length ? <div className="table-wrap"><table><caption className="sr-only">{title} top five standings</caption><thead><tr><th scope="col">Pos</th><th scope="col">Club</th><th scope="col">P</th><th scope="col">GD</th><th scope="col">Pts</th></tr></thead><tbody>{[...rows].sort((a,b)=>a.position-b.position).slice(0,5).map(t=><tr key={t.teamId}><td>{t.position}</td><th scope="row" lang="uk">{t.team}</th><td>{t.matches}</td><td>{t.goalDiff > 0 ? "+" : ""}{t.goalDiff}</td><td className="points">{t.points}</td></tr>)}</tbody></table></div> : <p className="empty">Standings are temporarily unavailable.</p>}</div>;
+}
+export function ScorerPreview({ players, unavailable, druga = false }: { players: Scorer[]; unavailable: boolean; druga?: boolean }) {
+ return <>{unavailable ? <p className="empty">Scorer rankings are temporarily unavailable. {druga && "Both groups are needed for the combined ranking."}</p> : <ol className="scorer-list">{[...players].sort((a,b)=>b.goals-a.goals || a.player.localeCompare(b.player,"uk")).slice(0,5).map(p=><li key={`${p.group}-${p.id}`}><span className="scorer-name" lang="uk">{p.player}<small>{p.team}{druga ? ` · Group ${p.group === "2a" ? "A" : "B"}` : ""}</small></span><strong>{p.goals}<small>goals</small></strong></li>)}</ol>}<p className="footnote">Official PFL season totals · sorted by goals, then by name for tied totals.</p></>;
+}

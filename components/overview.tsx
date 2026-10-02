@@ -1,9 +1,10 @@
+import type { LeagueKey } from "@/lib/provider";
 import { connection } from "next/server";
 import { footballProvider } from "@/lib/provider";
 
-export default async function Overview() {
+export default async function Overview({ league = "1", title = "Persha Liga" }: { league?: LeagueKey; title?: string }) {
   await connection();
-  const data = await footballProvider.getLeague();
+  const data = await footballProvider.getLeague(league);
   const tours = data.calendar?.tours ?? [];
   const completed = tours
     .flatMap((t) => t.matches)
@@ -15,9 +16,9 @@ export default async function Overview() {
   return <>
         <section className="hero">
           <div>
-            <p className="eyebrow">FOOTBALL / UKRAINE / SECOND TIER</p>
+            <p className="eyebrow">FOOTBALL / UKRAINE</p>
             <h1>
-              Persha Liga<span>.</span>
+              {title}<span>.</span>
             </h1>
             <p className="intro">
               Every result. Every point. Follow the season.

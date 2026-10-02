@@ -10,7 +10,7 @@ function dateLabel(date: string | null) {
       }).format(new Date(`${date}T12:00:00Z`))
     : "Date to be confirmed";
 }
-function MatchCard({ match }: { match: Match }) {
+export function MatchCard({ match, league = "1" }: { match: Match; league?: string }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{
@@ -22,7 +22,7 @@ function MatchCard({ match }: { match: Match }) {
     if (open || result || loading) return;
     setLoading(true);
     try {
-      const r = await fetch(`/api/matches/${match.matchId}`);
+      const r = await fetch(`/api/matches/${match.matchId}?league=${league}`);
       if (!r.ok) throw Error();
       setResult(await r.json());
     } catch {
@@ -110,7 +110,7 @@ function MatchCard({ match }: { match: Match }) {
     </article>
   );
 }
-export default function MatchesClient({ calendar }: { calendar: Calendar }) {
+export default function MatchesClient({ calendar, league = "1" }: { calendar: Calendar; league?: string }) {
   const tours = calendar?.tours ?? [];
   const initial =
     [...tours].reverse().find((t) => t.matches.some((m) => m.score?.finished))
@@ -170,7 +170,7 @@ export default function MatchesClient({ calendar }: { calendar: Calendar }) {
       </div>
       <div className="match-grid">
         {matches.map((m) => (
-          <MatchCard key={m.matchId} match={m} />
+          <MatchCard key={m.matchId} match={m} league={league} />
         ))}
       </div>
       {!matches.length && (

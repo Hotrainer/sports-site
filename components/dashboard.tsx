@@ -2,7 +2,7 @@
 import { useEffect, useState, useTransition, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
-export default function Dashboard({ matches, standings }: { matches: ReactNode; standings: ReactNode }) {
+export default function Dashboard({ matches, standings, league = "1" }: { matches: ReactNode; standings: ReactNode; league?: string }) {
   const [tab, setTab] = useState<"matches" | "standings">("matches");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -16,16 +16,16 @@ export default function Dashboard({ matches, standings }: { matches: ReactNode; 
       <div className="tabs" role="tablist" aria-label="League views">
         {(["matches", "standings"] as const).map(view => (
           <button key={view} role="tab" aria-selected={tab === view}
-            aria-controls={view + "-panel"} id={view + "-tab"}
+            aria-controls={view + "-panel-" + league} id={view + "-tab-" + league}
             onClick={() => setTab(view)}>
             {view === "matches" ? "Matches" : "Standings"}
           </button>
         ))}
       </div>
-      <section id="matches-panel" role="tabpanel" aria-labelledby="matches-tab" hidden={tab !== "matches"} aria-busy={pending}>
+      <section id={`matches-panel-${league}`} role="tabpanel" aria-labelledby={`matches-tab-${league}`} hidden={tab !== "matches"} aria-busy={pending}>
         {matches}
       </section>
-      <section id="standings-panel" role="tabpanel" aria-labelledby="standings-tab" hidden={tab !== "standings"} aria-busy={pending}>
+      <section id={`standings-panel-${league}`} role="tabpanel" aria-labelledby={`standings-tab-${league}`} hidden={tab !== "standings"} aria-busy={pending}>
         {standings}
       </section>
     </>

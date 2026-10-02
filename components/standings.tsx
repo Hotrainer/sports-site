@@ -1,9 +1,10 @@
+import type { LeagueKey } from "@/lib/provider";
 import { footballProvider } from "@/lib/provider";
 import { connection } from "next/server";
 
-export default async function Standings() {
+export default async function Standings({ league = "1", title = "Persha Liga" }: { league?: LeagueKey; title?: string }) {
   await connection();
-  const standings = await footballProvider.getStandings().catch(() => []);
+  const standings = await footballProvider.getStandings(league).catch(() => []);
   return (
     <>
       <div className="section-heading">
@@ -15,7 +16,7 @@ export default async function Standings() {
       </div>
       <div className="table-wrap" tabIndex={0} aria-label="Full standings table">
         <table>
-          <caption className="sr-only">Persha Liga standings</caption>
+          <caption className="sr-only">{title} standings</caption>
           <thead>
             <tr>
               {["Pos", "Club", "P", "W", "D", "L", "GF", "GA", "GD", "Pts"].map(h => (

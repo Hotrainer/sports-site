@@ -11,7 +11,7 @@ export default async function Header() {
           </span>
           hotrainer<span className="brand-dot">.</span>
         </a>
-        <span className="header-note">A niched sports</span>
+        <nav className="site-nav" aria-label="Main navigation"><a href="/">Home</a><a href="/persha-liga">Persha Liga</a><a href="/druga-liga">Druga Liga</a></nav>
         <span className="country">
           <i aria-hidden="true" />
           Ukraine
