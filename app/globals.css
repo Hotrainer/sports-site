@@ -608,5 +608,5 @@ tbody tr:hover {
 @media(max-width:760px) { .daily-grid,.summary-grid { grid-template-columns:1fr; } .day-heading { flex-direction:row; } .site-header { flex-wrap:wrap; height:auto; padding-top:16px; padding-bottom:16px; gap:16px; } .site-nav { order:3; width:100%; gap:24px; } .summary-card { padding:18px; } .home-main h1 { font-size:38px; } }
 .league-title { font-size:58px; line-height:1.1; letter-spacing:-2.7px; margin:0 0 14px; }
 .league-title span { color:#8d9d6e; }
-main.druga-main { max-width:none; padding:0; }
+main.druga-main { max-width:1184px; padding:0; }
 @media(max-width:760px) { .league-title { font-size:38px; } }
