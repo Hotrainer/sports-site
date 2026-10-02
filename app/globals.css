@@ -610,3 +610,8 @@ tbody tr:hover {
 .league-title span { color:#8d9d6e; }
 main.druga-main { max-width:1184px; padding:0; }
 @media(max-width:760px) { .league-title { font-size:38px; } }
+
+.hockey-match { padding:14px 0; border-bottom:1px solid var(--border, #e4e7e5); }
+.hockey-match-meta { display:flex; justify-content:space-between; gap:10px; font-size:11px; color:#647068; margin-bottom:8px; }
+.hockey-match-teams { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:14px; line-height:1.7; }
+.hockey-match-teams strong { white-space:nowrap; font-size:18px; }

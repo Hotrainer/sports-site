@@ -65,3 +65,13 @@ Deployment was attempted on 30 September 2026. The saved Vercel OAuth session co
 Homepage now shows yesterday/today/tomorrow matches using Kyiv dates, top-five standings for Persha Liga and both Druga groups, and top-five scorer lists. Full dashboards are at `/persha-liga` and `/druga-liga`. Druga groups have independent filters and standings. Current league keys: `1`, `2a`, `2b`.
 
 Scorer totals are parsed from `.row-bombardiers` on official `/standing/{tournamentId}` pages. Druga totals combine both groups, failing closed if either group is unavailable. Tied totals sort by Ukrainian player name. HTML markup changes may make scorers unavailable. Existing Hotrainer branding, uncached server reads and automatic five-minute refresh are preserved.
+
+
+## KHL hockey
+
+Set `HIGHLIGHTLY_API_KEY` in the local `.env` and deployment environment (server only).
+The homepage includes KHL games and top-five conference previews; `/hockey` shows games, all divisions and full conferences. Player and goalie rankings are not available from this provider.
+
+Highlightly league 30569 uses the season start year (e.g. 2026 for 2026/27). Three dated `/matches` calls and one `/standings` call share a two-hour Next.js fetch cache across both pages. On Vercel this uses its persistent Data Cache. Normal continuous traffic is approximately 48 upstream requests/day, plus date rollover, retries, deployment environments and manual cache resets. This is a cache budget, not a hard global quota limiter; preview and local environments also use the same account allowance. Avoid running multiple active deployments against a 100/day key. Page auto-refresh does not bypass the hockey cache.
+
+Unavailable API data renders an explicit message; cached responses can remain visible during revalidation. Times and day boundaries use Europe/Kyiv. Points are computed as two per regulation/overtime/shootout win plus one per overtime/shootout loss; table order uses the provider's positions.
