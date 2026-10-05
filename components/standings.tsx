@@ -14,8 +14,13 @@ export default async function Standings({ league = "1", title = "Persha Liga" }:
         </div>
         <span className="table-hint">Scroll table horizontally on small screens →</span>
       </div>
-      <div className="table-wrap" tabIndex={0} aria-label="Full standings table">
-        <table>
+      <div className="table-wrap full-standings" tabIndex={0} aria-label="Full standings table">
+        <table style={{ "--stat-count": 8 } as import("react").CSSProperties}>
+          <colgroup>
+            <col className="standings-position" />
+            <col className="standings-club" />
+            {Array.from({ length: 8 }, (_, i) => <col className="standings-stat" key={i} />)}
+          </colgroup>
           <caption className="sr-only">{title} standings</caption>
           <thead>
             <tr>

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import FootballLoading from "@/components/football-loading";
 import type { Calendar, Match, Goal } from "@/lib/schema";
 function dateLabel(date: string | null) {
   return date
@@ -72,7 +73,7 @@ export function MatchCard({ match, league = "1" }: { match: Match; league?: stri
           aria-live="polite"
         >
           {loading ? (
-            <p>Loading scorers…</p>
+            <FootballLoading />
           ) : result?.status === "complete" ? (
             result.goals.length ? (
               <ul>

@@ -615,3 +615,88 @@ main.druga-main { max-width:1184px; padding:0; }
 .hockey-match-meta { display:flex; justify-content:space-between; gap:10px; font-size:11px; color:#647068; margin-bottom:8px; }
 .hockey-match-teams { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:14px; line-height:1.7; }
 .hockey-match-teams strong { white-space:nowrap; font-size:18px; }
+
+.football-loading {
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+  color: var(--accent);
+}
+.football-loading-ball {
+  width: 56px;
+  height: 56px;
+  animation: football-blink 1.4s ease-in-out infinite;
+}
+@keyframes football-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .football-loading-ball { animation: none; }
+}
+
+@media (width < 1031px) {
+  .homepage-standings .standings-preview table {
+    min-width: 0;
+  }
+  .homepage-standings .standings-preview tr > :first-child,
+  .homepage-standings .standings-preview tr > :nth-child(n + 4):not(:last-child) {
+    display: none;
+  }
+  .homepage-standings .standings-preview tbody th {
+    white-space: normal;
+  }
+}
+
+.full-standings {
+  container-type: inline-size;
+}
+.full-standings table {
+  font-size: 11px;
+}
+.full-standings tbody th {
+  font-size: 11px;
+}
+.full-standings th,
+.full-standings td {
+  padding: 10px 8px;
+}
+@media (width < 1031px) {
+  .full-standings {
+    --position-width: 36px;
+    --club-width: clamp(110px, 45cqw, 240px);
+    --stat-width: calc((100cqw - var(--position-width) - var(--club-width)) / 2);
+  }
+  .full-standings table {
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 0;
+    width: calc(var(--position-width) + var(--club-width) + var(--stat-count) * var(--stat-width));
+  }
+  .full-standings .standings-position { width: var(--position-width); }
+  .full-standings .standings-club { width: var(--club-width); }
+  .full-standings .standings-stat { width: var(--stat-width); }
+  .full-standings tr > :first-child,
+  .full-standings tr > :nth-child(2) {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--paper);
+  }
+  .full-standings tr > :nth-child(2) {
+    left: var(--position-width);
+    white-space: normal;
+    overflow-wrap: anywhere;
+    box-shadow: 1px 0 0 var(--line);
+  }
+  .full-standings thead tr > :first-child,
+  .full-standings thead tr > :nth-child(2) {
+    background: #edf1eb;
+    z-index: 2;
+  }
+  .full-standings tbody tr:hover > :first-child,
+  .full-standings tbody tr:hover > :nth-child(2) {
+    background: #f7f9f4;
+  }
+}
